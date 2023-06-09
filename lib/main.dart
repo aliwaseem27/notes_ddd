@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+
+import 'package:notes_ddd/injection.dart';
 
 void main() {
+  configureInjectable(Environment.prod);
   runApp(const MyApp());
 }
 
