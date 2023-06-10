@@ -21,49 +21,48 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
   final IAuthFacade _authFacede;
 
   SignInFormBloc(this._authFacede) : super(SignInFormState.initial()) {
-    on<SignInFormEvent>((event, emit) {
-      event.when(
-        emailChanged: (emailStr) {
-          emit(state.copyWith(
-            emailAddress: EmailAddress(emailStr),
-            authFailureOrSuccessOption: none(),
-          ));
-        },
-        passwordChanged: (passwordStr) {
-          emit(state.copyWith(
-            password: Password(passwordStr),
-            authFailureOrSuccessOption: none(),
-          ));
-        },
-        registerWithEmailAndPasswordPressed:
-            _performActionOnAuthFacadeWithEmailAndPassword(
-          _authFacede.registerWithEmailAndPassword,
-        ),
-        signInWithEmailAndPasswordPressed:
-            _performActionOnAuthFacadeWithEmailAndPassword(
-          _authFacede.signInWithEmailAndPassword,
-        ),
-        signInWithGooglePressed: () async {
-          emit(state.copyWith(
-            isSubmitting: true,
-            authFailureOrSuccessOption: none(),
-          ));
-          final failureOrSuccess = await _authFacede.signInWithGoogle();
-          emit(state.copyWith(
-            isSubmitting: false,
-            authFailureOrSuccessOption: some(failureOrSuccess),
-          ));
-        },
+    on<EmailChanged>((event, emit) {
+      emit(state.copyWith(
+        emailAddress: EmailAddress(event.emailStr),
+        authFailureOrSuccessOption: none(),
+      ));
+    });
+    on<PasswordChanged>((event, emit) {
+      emit(state.copyWith(
+        password: Password(event.passwordStr),
+        authFailureOrSuccessOption: none(),
+      ));
+    });
+    on<RegisterWithEmailAndPasswordPressed>((event, emit) {
+      _performActionOnAuthFacadeWithEmailAndPassword(
+        _authFacede.registerWithEmailAndPassword,
       );
+    });
+    on<SignInWithEmailAndPasswordPressed>((event, emit) {
+      _performActionOnAuthFacadeWithEmailAndPassword(
+        _authFacede.signInWithEmailAndPassword,
+      );
+    });
+    on<SignInWithGooglePressed>((event, emit) async {
+      emit(state.copyWith(
+        isSubmitting: true,
+        authFailureOrSuccessOption: none(),
+      ));
+      final failureOrSuccess = await _authFacede.signInWithGoogle();
+      emit(state.copyWith(
+        isSubmitting: false,
+        authFailureOrSuccessOption: some(failureOrSuccess),
+      ));
     });
   }
 
   _performActionOnAuthFacadeWithEmailAndPassword(
-      Future<Either<AuthFailure, Unit>> Function({
-    required EmailAddress emailAddress,
-    required Password password,
-  })
-          forwardedCall) async {
+    Future<Either<AuthFailure, Unit>> Function({
+      required EmailAddress emailAddress,
+      required Password password,
+    })
+        forwardedCall,
+  ) async {
     Either<AuthFailure, Unit>? failureOrSuccess;
     final isEmailValid = state.emailAddress.isValid();
     final isPasswordValid = state.password.isValid();

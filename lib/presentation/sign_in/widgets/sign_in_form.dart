@@ -21,7 +21,7 @@ class SignInForm extends StatelessWidget {
                 emailAlreadyInUse: (_) => "Email already in use",
                 invalidEmailAndPasswordCombination: (_) =>
                     "Invalid email and password combination",
-              ));
+              )).show(context);
             },
             (r) {
               // TODO: Navigate
@@ -49,13 +49,18 @@ class SignInForm extends StatelessWidget {
                 onChanged: (value) => context
                     .read<SignInFormBloc>()
                     .add(SignInFormEvent.emailChanged(value)),
-                validator: (_) => state.emailAddress.value.fold(
-                  (f) => f.maybeMap(
-                    invalidEmail: (_) => "Invalid Email",
-                    orElse: () => null,
-                  ),
-                  (_) => null,
-                ),
+                validator: (_) => context
+                    .read<SignInFormBloc>()
+                    .state
+                    .emailAddress
+                    .value
+                    .fold(
+                      (f) => f.maybeMap(
+                        invalidEmail: (_) => "Invalid Email",
+                        orElse: () => null,
+                      ),
+                      (_) => null,
+                    ),
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -68,7 +73,8 @@ class SignInForm extends StatelessWidget {
                 onChanged: (value) => context
                     .read<SignInFormBloc>()
                     .add(SignInFormEvent.passwordChanged(value)),
-                validator: (_) => state.password.value.fold(
+                validator: (_) => context
+                    .read<SignInFormBloc>().state.password.value.fold(
                   (f) => f.maybeMap(
                     shortPassword: (_) => "Short Password",
                     orElse: () => null,
