@@ -4,8 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:notes_ddd/domain/auth/auth_failure.dart';
 import 'package:notes_ddd/domain/auth/i_auth_facade.dart';
+import 'package:notes_ddd/domain/auth/user.dart';
 import 'package:notes_ddd/domain/auth/value_objects.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:notes_ddd/infrastructure/auth/firebase_user_mapper.dart';
 
 @LazySingleton(as: IAuthFacade)
 class FirebaseAuthFacade implements IAuthFacade {
@@ -76,4 +78,16 @@ class FirebaseAuthFacade implements IAuthFacade {
       return left(const AuthFailure.serverError());
     }
   }
+
+  @override
+  Future<Option<CurrentUser>> getSignedInUser() async => optionOf(_firebaseAuth
+      .currentUser?.toDomain());
+
+  @override
+  Future<void> signOut() => Future.wait([
+    _googleSignIn.signOut(),
+    _firebaseAuth.signOut(),
+  ]);
+
+
 }
