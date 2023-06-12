@@ -6,11 +6,12 @@ import 'package:notes_ddd/bloc_observer.dart';
 
 import 'package:notes_ddd/injection.dart';
 import 'package:notes_ddd/presentation/core/app_widget.dart';
+import 'package:notes_ddd/presentation/routes/app_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   configureInjectable(Environment.prod);
-  runApp(const AppWidget());
+  runApp(AppWidget(getIt<AppRouter>()));
   Bloc.observer = AppBlocObserver();
 }

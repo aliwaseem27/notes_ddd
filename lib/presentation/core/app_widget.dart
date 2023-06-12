@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:notes_ddd/application/auth/sign_in_form/sign_in_form_bloc.dart';
-import 'package:notes_ddd/presentation/sign_in/sign_in_page.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:notes_ddd/presentation/routes/app_router.dart';
 
+@injectable
 class AppWidget extends StatelessWidget {
-  const AppWidget({super.key});
+  final AppRouter appRouter ;
+  const AppWidget(this.appRouter, {super.key} );
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Notes',
       theme: ThemeData(
         primarySwatch: Colors.green,
@@ -18,7 +19,7 @@ class AppWidget extends StatelessWidget {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))
         ),
       ),
-      home: SignInPage(),
+      routerConfig: appRouter.config(),
     );
   }
 }
