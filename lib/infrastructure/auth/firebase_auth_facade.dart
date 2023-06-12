@@ -88,6 +88,4 @@ class FirebaseAuthFacade implements IAuthFacade {
     _googleSignIn.signOut(),
     _firebaseAuth.signOut(),
   ]);
-
-
 }
