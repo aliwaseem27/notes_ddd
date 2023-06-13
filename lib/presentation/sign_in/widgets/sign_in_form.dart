@@ -1,7 +1,9 @@
 import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_ddd/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:notes_ddd/presentation/routes/app_router.dart';
 
 class SignInForm extends StatelessWidget {
   const SignInForm({Key? key}) : super(key: key);
@@ -87,14 +89,14 @@ class SignInForm extends StatelessWidget {
                   Expanded(
                     child: TextButton(
                       onPressed: () => context.read<SignInFormBloc>().add(
-                          SignInFormEvent.signInWithEmailAndPasswordPressed()),
+                          const SignInFormEvent.signInWithEmailAndPasswordPressed()),
                       child: const Text("SIGN IN"),
                     ),
                   ),
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        context.read<SignInFormBloc>().add(SignInFormEvent
+                        context.read<SignInFormBloc>().add(const SignInFormEvent
                             .registerWithEmailAndPasswordPressed());
                       },
                       child: const Text("REGISTER"),
@@ -105,11 +107,17 @@ class SignInForm extends StatelessWidget {
               ElevatedButton(
                 onPressed: () => context
                     .read<SignInFormBloc>()
-                    .add(SignInFormEvent.signInWithGooglePressed()),
+                    .add(const SignInFormEvent.signInWithGooglePressed()),
                 child: const Text(
                   "SIGN IN WITH GOOGLE",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  context.router.push(const SplashRoute());
+                },
+                child: const Text("To Splash"),
               )
             ],
           ),
