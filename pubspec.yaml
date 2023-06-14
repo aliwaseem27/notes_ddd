@@ -47,6 +47,7 @@ dependencies:
   another_flushbar: ^1.12.30
   uuid: ^3.0.7
   auto_route: ^7.4.0
+  kt_dart: ^1.1.0
 
 dev_dependencies:
   flutter_test:
