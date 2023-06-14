@@ -35,6 +35,7 @@ class SignInForm extends StatelessWidget {
         return Form(
           autovalidateMode: state.showErrorMessages,
           child: ListView(
+            padding: const EdgeInsets.all(8),
             children: [
               const Text(
                 "📝",
@@ -115,10 +116,14 @@ class SignInForm extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  context.router.push(const SplashRoute());
+                  context.router.replace(const SplashRoute());
                 },
                 child: const Text("To Splash"),
-              )
+              ),
+              if (state.isSubmitting)...[
+               const SizedBox(height: 8),
+               const LinearProgressIndicator(value: null),
+              ]
             ],
           ),
         );

@@ -32,7 +32,7 @@ class SplashPage extends StatelessWidget {
               const Text("Splash Page"),
               ElevatedButton(
                 onPressed: () {
-                  context.router.push(const SignInRoute());
+                  context.router.replace(const SignInRoute());
                 },
                 child: const Text("To Sign In Page"),
               )
