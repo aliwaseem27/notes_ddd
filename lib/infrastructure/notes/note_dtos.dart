@@ -50,12 +50,13 @@ abstract class NoteDTO implements _$NoteDTO {
     );
   }
 
-  factory NoteDTO.fromFirestore(DocumentSnapshot doc){
-    return NoteDTO.fromJson(doc.data() as Map<String, dynamic>).copyWith(id: doc.id);
+  factory NoteDTO.fromFirestore(DocumentSnapshot doc) {
+    return NoteDTO.fromJson(doc.data() as Map<String, dynamic>)
+        .copyWith(id: doc.id);
   }
 }
 
-class ServerTimestampConverter implements JsonConverter<FieldValue, Object>{
+class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
   const ServerTimestampConverter();
 
   @override

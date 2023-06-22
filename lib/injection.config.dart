@@ -13,13 +13,16 @@ import 'package:firebase_auth/firebase_auth.dart' as _i4;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:google_sign_in/google_sign_in.dart' as _i5;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:notes_ddd/application/auth/auth_bloc.dart' as _i9;
+import 'package:notes_ddd/application/auth/auth_bloc.dart' as _i11;
 import 'package:notes_ddd/application/auth/sign_in_form/sign_in_form_bloc.dart'
+    as _i10;
+import 'package:notes_ddd/application/notes/note_watcher/note_watcher_bloc.dart'
     as _i8;
 import 'package:notes_ddd/domain/auth/i_auth_facade.dart' as _i6;
+import 'package:notes_ddd/domain/notes/i_note_repository.dart' as _i9;
 import 'package:notes_ddd/infrastructure/auth/firebase_auth_facade.dart' as _i7;
 import 'package:notes_ddd/infrastructure/core/firebase_injectable_module.dart'
-    as _i10;
+    as _i12;
 import 'package:notes_ddd/presentation/routes/app_router.dart' as _i3;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -43,11 +46,13 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i4.FirebaseAuth>(),
           gh<_i5.GoogleSignIn>(),
         ));
-    gh.factory<_i8.SignInFormBloc>(
-        () => _i8.SignInFormBloc(gh<_i6.IAuthFacade>()));
-    gh.factory<_i9.AuthBloc>(() => _i9.AuthBloc(gh<_i6.IAuthFacade>()));
+    gh.factory<_i8.NoteWatcherBloc>(
+        () => _i8.NoteWatcherBloc(gh<_i9.INoteRepository>()));
+    gh.factory<_i10.SignInFormBloc>(
+        () => _i10.SignInFormBloc(gh<_i6.IAuthFacade>()));
+    gh.factory<_i11.AuthBloc>(() => _i11.AuthBloc(gh<_i6.IAuthFacade>()));
     return this;
   }
 }
 
-class _$FirebaseInjectableModule extends _i10.FirebaseInjectableModule {}
+class _$FirebaseInjectableModule extends _i12.FirebaseInjectableModule {}
