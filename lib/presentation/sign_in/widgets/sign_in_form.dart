@@ -26,7 +26,7 @@ class SignInForm extends StatelessWidget {
               )).show(context);
             },
             (r) {
-              // TODO: Navigate
+              context.router.replace(const NotesOverviewRoute());
             },
           ),
         );
