@@ -1,5 +1,7 @@
+import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kt_dart/collection.dart';
+import 'package:notes_ddd/domain/core/failures.dart';
 import 'package:notes_ddd/domain/core/value_objects.dart';
 import 'package:notes_ddd/domain/notes/todo_item.dart';
 import 'package:notes_ddd/domain/notes/value_objects.dart';
@@ -7,7 +9,9 @@ import 'package:notes_ddd/domain/notes/value_objects.dart';
 part 'note.freezed.dart';
 
 @freezed
-abstract class Note with _$Note {
+abstract class Note implements _$Note {
+  const Note._();
+
   const factory Note({
     required UniqueId id,
     required NoteBody body,
@@ -16,9 +20,23 @@ abstract class Note with _$Note {
   }) = _Note;
 
   factory Note.empty() => Note(
-    id: UniqueId(),
-    body: NoteBody(""),
-    color: NoteColor(NoteColor.predefinedColors[0]),
-    todos: List3(emptyList()),
-  );
+        id: UniqueId(),
+        body: NoteBody(""),
+        color: NoteColor(NoteColor.predefinedColors[0]),
+        todos: List3(emptyList()),
+      );
+
+  Option<ValueFailure<dynamic>> get failureOption {
+    return body.failureOrUnit
+        .andThen(todos.failureOrUnit)
+        .andThen(todos
+            .getOrCrash()
+            // Getting the failureOption from the TodoItem ENTITY - NOT a failureOrUnit from a VALUE OBJ!
+            .map((todoItem) => todoItem.failureOption)
+            .filter((o) => o.isSome())
+            // If we can't get the 0th element, the list is empty. In such a case, it's valid.
+            .getOrElse(0, (_) => none())
+            .fold(() => right(unit), (f) => left(f)))
+        .fold((f) => some(f), (_) => none());
+  }
 }

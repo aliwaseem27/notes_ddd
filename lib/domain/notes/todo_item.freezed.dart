@@ -111,8 +111,9 @@ class __$$_TodoItemCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TodoItem implements _TodoItem {
-  const _$_TodoItem({required this.id, required this.name, required this.done});
+class _$_TodoItem extends _TodoItem {
+  const _$_TodoItem({required this.id, required this.name, required this.done})
+      : super._();
 
   @override
   final UniqueId id;
@@ -146,11 +147,12 @@ class _$_TodoItem implements _TodoItem {
       __$$_TodoItemCopyWithImpl<_$_TodoItem>(this, _$identity);
 }
 
-abstract class _TodoItem implements TodoItem {
+abstract class _TodoItem extends TodoItem {
   const factory _TodoItem(
       {required final UniqueId id,
       required final TodoName name,
       required final bool done}) = _$_TodoItem;
+  const _TodoItem._() : super._();
 
   @override
   UniqueId get id;
