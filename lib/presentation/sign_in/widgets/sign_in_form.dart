@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_ddd/application/auth/auth_bloc.dart';
 import 'package:notes_ddd/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:notes_ddd/presentation/routes/app_router.dart';
 
@@ -27,6 +28,7 @@ class SignInForm extends StatelessWidget {
             },
             (r) {
               context.router.replace(const NotesOverviewRoute());
+              context.read<AuthBloc>().add(const AuthEvent.authCheckRequested());
             },
           ),
         );
