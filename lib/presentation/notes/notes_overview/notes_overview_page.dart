@@ -8,6 +8,7 @@ import 'package:notes_ddd/application/notes/note_actor/note_actor_bloc.dart';
 import 'package:notes_ddd/application/notes/note_watcher/note_watcher_bloc.dart';
 import 'package:notes_ddd/injection.dart';
 import 'package:notes_ddd/presentation/notes/notes_overview/widgets/notes_overview_body_widget.dart';
+import 'package:notes_ddd/presentation/notes/notes_overview/widgets/uncompleted_switcher.dart';
 import 'package:notes_ddd/presentation/routes/app_router.dart';
 
 @RoutePage()
@@ -65,12 +66,7 @@ class _NotesOverviewPageState extends State<NotesOverviewPage> {
               },
             ),
             actions: [
-              IconButton(
-                onPressed: () {
-                  // TODO: Toggle between completed and uncompleted tasks
-                },
-                icon: Icon(Icons.indeterminate_check_box),
-              ),
+              UncompletedSwitcher(),
             ],
           ),
           floatingActionButton: FloatingActionButton(
