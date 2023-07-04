@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_ddd/application/notes/note_watcher/note_watcher_bloc.dart';
+import 'package:notes_ddd/presentation/notes/notes_overview/widgets/note_card_widget.dart';
 
 class NotesOverviewBody extends StatelessWidget {
   const NotesOverviewBody({Key? key}) : super(key: key);
@@ -24,11 +25,7 @@ class NotesOverviewBody extends StatelessWidget {
                       height: 100,
                     );
                   } else {
-                    return Container(
-                      color: Colors.green,
-                      width: 100,
-                      height: 100,
-                    );
+                    return NoteCard(note: note);
                   }
                 },
                 itemCount: state.notes.size,
