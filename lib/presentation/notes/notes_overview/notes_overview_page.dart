@@ -71,9 +71,9 @@ class _NotesOverviewPageState extends State<NotesOverviewPage> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              // TODO: Navigate to NoteFormPage
+              context.router.push(NoteFormRoute(editedNote: null));
             },
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
           ),
           body: NotesOverviewBody(),
         ),
