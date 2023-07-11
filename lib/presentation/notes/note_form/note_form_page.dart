@@ -17,13 +17,13 @@ class NoteFormPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<NoteFormBloc>()
         ..add(NoteFormEvent.initialized(optionOf(editedNote))),
-      child: NoteFormSacffold(),
+      child: const NoteFormScaffold(),
     );
   }
 }
 
-class NoteFormSacffold extends StatelessWidget {
-  const NoteFormSacffold({
+class NoteFormScaffold extends StatelessWidget {
+  const NoteFormScaffold({
     super.key,
   });
 
