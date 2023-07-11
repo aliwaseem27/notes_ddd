@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/collection.dart';
@@ -67,7 +68,7 @@ class NoteFormBloc extends Bloc<NoteFormEvent, NoteFormState> {
       }
       emit(state.copyWith(
         isSaving:false,
-        showErrorMessages: true,
+        showErrorMessages: AutovalidateMode.always,
         saveFailureOrSuccessOption: optionOf(failureOrSuccess),
       ));
     });

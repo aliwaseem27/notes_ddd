@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_ddd/application/notes/note_form/note_form_bloc.dart';
+import 'package:notes_ddd/presentation/notes/note_form/widgets/body_field_widget.dart';
 
 class NoteFormScaffold extends StatelessWidget {
   const NoteFormScaffold({
@@ -25,6 +26,21 @@ class NoteFormScaffold extends StatelessWidget {
               },
               icon: const Icon(Icons.check))
         ],
+      ),
+      body: BlocBuilder<NoteFormBloc, NoteFormState>(
+        buildWhen: (p, c) => p.showErrorMessages != c.showErrorMessages,
+        builder: (context, state) {
+          return Form(
+            autovalidateMode: state.showErrorMessages,
+            child: SingleChildScrollView(
+              child: Column(
+                children: const [
+                  BodyField(),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
